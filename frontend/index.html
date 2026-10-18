@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Student Timetable & Goals</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 0; background: #f4f6fa; color: #1f2937; }
+    header { background: #0f766e; color: #fff; padding: 16px 24px; }
+    header h1 { margin: 0; font-size: 1.4rem; }
+    header p { margin: 4px 0 0; opacity: .85; font-size: .9rem; }
+    main { max-width: 1100px; margin: 20px auto; padding: 0 16px; }
+    .card { background: #fff; border-radius: 8px; padding: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    label { display: flex; flex-direction: column; font-size: .85rem; gap: 4px; }
+    input, textarea, select { padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font: inherit; }
+    .full { grid-column: 1 / -1; }
+    button { padding: 8px 14px; border: 0; border-radius: 6px; cursor: pointer; font: inherit; }
+    .primary { background: #0f766e; color: #fff; }
+    .secondary { background: #e2e8f0; }
+    .edit { background: #f59e0b; color: #fff; }
+    .del { background: #dc2626; color: #fff; }
+    table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+    th, td { text-align: left; padding: 8px; border-bottom: 1px solid #e5e7eb; vertical-align: top; }
+    th { background: #f1f5f9; }
+    .actions { display: flex; gap: 6px; }
+    #msg { margin: 8px 0 0; font-size: .85rem; min-height: 1.2em; }
+    .table-wrap { overflow-x: auto; }
+    .badge { padding: 2px 8px; border-radius: 10px; font-size: .75rem; color: #fff; white-space: nowrap; }
+    .Pending { background: #64748b; }
+    .In-Progress { background: #2563eb; }
+    .Completed { background: #16a34a; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Student Timetable &amp; Goals</h1>
+    <p>Mulungushi University &middot; CRUD demo (Node.js + Express + SQLite)</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 id="formTitle">Add a timetable entry</h2>
+      <form id="entryForm">
+        <input type="hidden" id="entryId" />
+        <label>Course code *
+          <input id="course_code" required maxlength="20" placeholder="e.g. ICT251" />
+        </label>
+        <label>Course name
+          <input id="course_name" maxlength="150" />
+        </label>
+        <label>Day of week
+          <select id="day_of_week">
+            <option value="">-- choose --</option>
+            <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+            <option>Thursday</option><option>Friday</option><option>Saturday</option><option>Sunday</option>
+          </select>
+        </label>
+        <label>Start time
+          <input id="start_time" type="time" />
+        </label>
+        <label>End time
+          <input id="end_time" type="time" />
+        </label>
+        <label>Venue
+          <input id="venue" maxlength="100" />
+        </label>
+        <label>Lecturer
+          <input id="lecturer" maxlength="100" />
+        </label>
+        <label>Goal status
+          <select id="goal_status">
+            <option>Pending</option>
+            <option>In Progress</option>
+            <option>Completed</option>
+          </select>
+        </label>
+        <label class="full">Study goal
+          <textarea id="study_goal" rows="2" placeholder="What do you want to achieve for this course?"></textarea>
+        </label>
+        <div class="full">
+          <button type="submit" class="primary">Save entry</button>
+          <button type="button" class="secondary" id="cancelBtn" hidden>Cancel edit</button>
+          <p id="msg"></p>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2>My timetable</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Code</th><th>Course</th><th>Day</th><th>Time</th>
+              <th>Venue</th><th>Lecturer</th><th>Study goal</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
